@@ -20,7 +20,7 @@ def read_lf_card():
         re_search_output = re.search('HID Prox TAG ID: (.+?) - Format', pm3.before)
         output = 'Card Found: ' + re_search_output.group(1)
     else:
-        output = 'error!'
+        output = 'Error! Consult your local Josh for more details.'
     return output
 
 
