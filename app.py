@@ -17,15 +17,16 @@ def read_lf_card():
     if i == 0:
         output = 'Could not find a card, try again.'
         card_hex = ''
+        return output, card_hex
     elif i == 1:
         re_search_output = re.search('HID Prox TAG ID: (.+?) - Format', pm3.before)
         output = 'Card Found: ' + re_search_output.group(1)
         card_hex = re_search_output.group(1).split()[0]
+        return output, card_hex
     else:
-        output = 'Error! Consult your local Josh for more details.\n' + pm3.before
+        output = 'ERROR! Consult your local Josh for more details.  ' + pm3.before
         card_hex = ''
-    return output, card_hex
-
+        return output, card_hex
 
 def write_lf_card(card_hex):
     pm3.sendline('lf hid clone ' + card_hex)
