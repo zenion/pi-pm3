@@ -10,6 +10,7 @@ app = Flask(__name__)
 pm3 = pexpect.spawn('proxmark3 ' + config.proxmark3_device)
 pm3.expect('ARM7TDMI')
 
+
 def read_lf_card():
     pm3.sendline('lf search')
     i = pm3.expect(['No Known Tags Found!', 'Valid HID Prox ID Found!'])
@@ -23,11 +24,13 @@ def read_lf_card():
     else:
         output = 'Error! Consult your local Josh for more details.'
         card_hex = ''
-    return (output, card_hex)
+    return output, card_hex
+
 
 def write_lf_card(card_hex):
     pm3.sendline('lf hid clone ' + card_hex)
-    i = pm3.expect('DONE!')
+    pm3.expect('DONE!')
+
 
 @app.route('/')
 def index():
