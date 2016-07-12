@@ -12,10 +12,26 @@
 
 <script>
 $(document).ready(function(){
+    var card_hex;
+    $("#writebutton").hide();
     $("#scanbutton").click(function(){
         $.getJSON("/read", function(data){
             $("#result").text(data.result);
+            card_hex = data.card_hex;
+            if(card_hex){
+                $("#writebutton").show();
+            } else {
+                $("#writebutton").hide();
+                $("#writeresult").text("");
+            };
         });
+    });
+    $("#writebutton").click(function(){
+        if(card_hex){
+            $.getJSON("/write?id=" + card_hex, function(data){
+                $("#writeresult").text(data.result);
+            });
+        };
     });
 });
 </script>
@@ -29,8 +45,10 @@ $(document).ready(function(){
         <p>Read and Write to Proximity Cards</p>
         <br>
         <div class="well bg-2">
-            <div><button id="scanbutton" class="btn btn-primary btn-block">SCAN</button></div><br>
-            <div id="result"></div>
+            <div><button id="scanbutton" class="btn btn-primary btn-block">SCAN</button><br></div>
+            <div id="result"></div><br>
+            <div><button id="writebutton" class="btn btn-danger btn-block">WRITE TO NEW CARD</button><br></div>
+            <div id="result2"><br></div>
         </div>
     </div>
 </div>
