@@ -17,12 +17,12 @@ $(document).ready(function(){
     $("#scanbutton").click(function(){
         $.getJSON("/read", function(data){
             $("#result").text(data.result);
+            $("#writeresult").text("");
             card_hex = data.card_hex;
             if(card_hex){
                 $("#writebutton").show();
             } else {
                 $("#writebutton").hide();
-                $("#writeresult").text("");
             };
         });
     });
@@ -37,18 +37,15 @@ $(document).ready(function(){
 </script>
 
 <body> 
-<div class="container text-center">
-    <br>
+    <br><div class="container text-center">
     <div class="jumbotron bg-1">
         <img src="/static/login_logo_lg.jpg" class="img-rounded"/>
-        <h1>Proximity Cards</h1>
-        <p>Read and Write to Proximity Cards</p>
-        <br>
+        <h2>Proximity Cards</h2>
         <div class="well bg-2">
             <div><button id="scanbutton" class="btn btn-primary btn-block">SCAN</button><br></div>
             <div id="result"></div><br>
             <div><button id="writebutton" class="btn btn-danger btn-block">WRITE TO NEW CARD</button><br></div>
-            <div id="result2"><br></div>
+            <div id="writeresult"><br></div>
         </div>
     </div>
 </div>
