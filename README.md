@@ -1,1 +1,1 @@
-A PROJECT FOR DOING PROXMARK3 THINGS
+A WebUI for working with a proxmark3 on a Raspberry Pi touchscreen interface.
