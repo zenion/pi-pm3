@@ -8,12 +8,12 @@ import re
 app = Flask(__name__)
 
 pm3 = pexpect.spawn('proxmark3 ' + config.proxmark3_device)
-pm3.expect('ARM7TDMI')
+pm3.expect('proxmark3>')
 
 
 def read_lf_card():
     pm3.sendline('lf search')
-    i = pm3.expect(['No Known Tags Found!', 'Valid HID Prox ID Found!'])
+    i = pm3.expect(['No Known Tags Found!', 'Valid HID Prox ID Found!', 'Valid Indala ID Found!'])
     if i == 0:
         output = 'Could not find a card, try again.'
         card_hex = ''
@@ -22,7 +22,7 @@ def read_lf_card():
         output = 'Card Found: ' + re_search_output.group(1)
         card_hex = re_search_output.group(1).split()[0]
     else:
-        output = 'Error! Consult your local Josh for more details.'
+        output = 'Error! Consult your local Josh for more details.\n' + pm3.before
         card_hex = ''
     return output, card_hex
 
