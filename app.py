@@ -4,7 +4,7 @@ import config
 from flask import Flask, request, render_template, jsonify
 import pexpect
 import re
-	
+
 app = Flask(__name__)
 
 pm3 = pexpect.spawn('proxmark3 ' + config.proxmark3_device)
@@ -19,6 +19,8 @@ def read_lf_card():
     elif i == 1:
         re_search_output = re.search('HID Prox TAG ID: (.+?) - Format', pm3.before)
         output = 'Card Found: ' + re_search_output.group(1)
+    else:
+        output = 'error!'
     return output
 
 
@@ -29,6 +31,7 @@ def read_hf_card():
 @app.route('/')
 def index():
     return render_template('index.html')
+
 
 @app.route('/read')
 def read():
