@@ -1,53 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html ng-app="mainApp">
+
 <head>
-    <title>Pliancy - Proximity Card App</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/static/colors.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <meta charset="utf-8" />
+    <title>Pliancy Proximity Cards</title>
+    <link data-require="bootstrap-css@*" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" data-semver="3.3.6" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+    <script>
+        document.write('<base href="' + document.location + '" />');
+    </script>
+    <!-- AngularJS stuff -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular-route.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular-animate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.3/ui-bootstrap-tpls.min.js"></script>
 </head>
 
-<script>
-$(document).ready(function(){
-    var card_hex;
-    $("#writebutton").hide();
-    $("#scanbutton").click(function(){
-        $.getJSON("/read", function(data){
-            $("#result").text(data.result);
-            $("#writeresult").text("");
-            card_hex = data.card_hex;
-            if(card_hex){
-                $("#writebutton").show();
-            } else {
-                $("#writebutton").hide();
-            };
-        });
-    });
-    $("#writebutton").click(function(){
-        if(card_hex){
-            $.getJSON("/write?id=" + card_hex, function(data){
-                $("#writeresult").text(data.result);
-            });
-        };
-    });
-});
-</script>
+<body ng-controller="mainController">
+    <header>
+        <nav class="navbar navbar-default" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#/"><img class="navbar-left"  style="height: 100%" src="https://manage.pliancy.com/images/login_logo_lg.png">Proximity Cards</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" ng-controller="navController" uib-collapse="navCollapsed">
+                <ul class="nav navbar-nav navbar-right">
+                    <li ng-class="{ active: isActive('/companies')}">
+                        <a href="#companies"><i class="fa fa-book fa-fw" aria-hidden="true"></i> Companies</a>
+                    </li>
+                    <li ng-class="{ active: isActive('/')}">
+                        <a href="#/"><i class="fa fa-home fa-fw" aria-hidden="true"></i> Home</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </nav>
+    </header>
+    
+    <div ng-view></div>
 
-<body> 
-    <br><div class="container text-center">
-    <div class="jumbotron bg-1">
-        <img src="/static/login_logo_lg.jpg" class="img-rounded"/>
-        <h2>Proximity Cards</h2>
-        <div class="well bg-2">
-            <div><button id="scanbutton" class="btn btn-primary btn-block">SCAN</button><br></div>
-            <div id="result"></div><br>
-            <div><button id="writebutton" class="btn btn-danger btn-block">WRITE TO NEW CARD</button><br></div>
-            <div id="writeresult"><br></div>
-        </div>
-    </div>
-</div>
+    <script src="/static/script.js"></script>
+
 </body>
+
 </html>
