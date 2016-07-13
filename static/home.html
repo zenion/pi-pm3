@@ -1,0 +1,17 @@
+<div class="container">
+        <div class="well">
+            <div>
+                <button ng-click="readData = undefined; writeData = undefined" class="btn btn-lg btn-default">CLEAR</button><br><br>
+                <button ng-click="writeData = undefined; readCard()" class="btn btn-primary btn-lg btn-block">READ CARD</button>
+                <div class="text-center" uib-collapse="!readData.result"><br>{{ readData.result }}</div>
+            </div><br>
+            <div>
+                <button ng-click="writeCard(readData.card_hex)" class="btn btn-danger btn-lg btn-block">WRITE CARD</button>
+                <br><div class="text-center"><label class="text-left">Card ID To Write:<input ng-model="readData.card_hex" class="form-control" type="text"></label></div>
+                <br>
+            </div>
+            <div class="text-center"><b>{{ writeData.result }}</b></div>
+            <div class="checkbox"><label><input type="checkbox" ng-model="showJSON">Show JSON Data</label></div>
+            <div uib-collapse="!showJSON"><b>READ DATA:</b><br>{{ readData }}<br><br><b>WRITE DATA:</b><br>{{ writeData }}</div>
+        </div>
+</div>
